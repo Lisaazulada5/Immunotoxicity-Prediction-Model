@@ -182,8 +182,8 @@ def arbol_decision(X, y, test_size=0.2, random_state=42):
     modelo = DecisionTreeClassifier(criterion= 'entropy', max_depth=3,
                                     min_samples_split=2,
                                     min_samples_leaf=10,
-                                    random_state=42, class_weight='balanced',
-                                    ccp_alpha=0.01)
+                                    random_state=42, class_weight='balanced'
+                                    ,ccp_alpha=0.01)
 
     modelo.fit(X_train, y_train)
 
@@ -294,11 +294,11 @@ def entrenar_random_forest(X, y, n_estimators=100, random_state=42):
 
     # Inicializar y entrenar el modelo
     modelo = RandomForestClassifier(criterion='gini',  # Cálculo de la impureza
-    min_samples_leaf=5,  # Mínimo de muestras por hoja
-    min_samples_split=2,  # Mínimo de muestras para dividir un nodo
-    n_estimators=100,  # Número de árboles
+    min_samples_leaf=1,  # Mínimo de muestras por hoja
+    min_samples_split=5,  # Mínimo de muestras para dividir un nodo
+    n_estimators=300,  # Número de árboles
     random_state=random_state,  # Semilla para reproducibilidad
-    max_depth=3, class_weight='balanced', ccp_alpha=  0.01) # Profundidad máxima del árbol
+    max_depth=5, class_weight='balanced') #,  ccp_alpha=  0.01) # Profundidad máxima del árbol
 
     modelo.fit(X_train, y_train)
 
@@ -370,8 +370,14 @@ def entrenar_xgboost(X, y, test_size=0.2, random_state=42, cv=5):
     #print(f"Peso de la clase minoritaria: {peso_clase:.2f}")
 
     # Configurar y entrenar modelo XGBoost
-    modelo = xgb.XGBClassifier(colsample_bytree =1 , max_depth=5, learning_rate=0.1, n_estimators=100,
-                               eval_metric="logloss"  , gamma = 0.0, subsample = 0.7)
+    modelo = xgb.XGBClassifier(colsample_bytree =1 ,
+                               max_depth=10,
+                               learning_rate=0.1,
+                               n_estimators=100,
+                               eval_metric="aucpr",
+                               gamma = 0.1,
+                               subsample = 0.7,
+                               scale_pos_weight = 1.48)
                                #reg_alpha =0.0001907254857105348, reg_lambda = 1.4848771867376586e-05, scale_pos_weight = 1.98)
     modelo.fit(X_train, y_train)
 
@@ -402,7 +408,7 @@ def entrenar_xgboost(X, y, test_size=0.2, random_state=42, cv=5):
     print(f"AUC promedio: {np.mean(auc_scores)}")
     print(f"Desviación estándar: {np.std(auc_scores)}")
 
-    return modelo, cm, y_pred_prob_test, y_test, X_train, X_test
+    return modelo, cm, y_pred_prob_test, y_test
 
 """
 MAQUINAS DE SOPORTE
@@ -434,7 +440,14 @@ def entrenar_svm(X, y, test_size=0.2, random_state=42, cv=10):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
     # Definir y entrenar el modelo SVM con kernel RBF
-    modelo = SVC(kernel='poly', C=10, gamma=0.001, coef0 = 0.5, degree = 5,   random_state=random_state, probability=True)
+    modelo = SVC(kernel='poly',
+                 C=0.1,
+                 gamma= "scale",
+                 coef0 = 0.1,
+                 degree = 4,
+                 random_state=random_state,
+                 probability=True,
+                 class_weight= "balanced")
     # Validación cruzada
     from sklearn.model_selection import StratifiedKFold, cross_val_score
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)

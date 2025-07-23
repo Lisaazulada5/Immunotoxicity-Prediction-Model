@@ -31,23 +31,24 @@ test_data_fingerprints = test_data_fingerprints.drop(columns=['MACCS', 'SMILES',
 
 MACCS_test = test_data_fingerprints.iloc[:, 2054:2222]
 predict_data = MACCS_test #extrae los nombres de las columnas del df
-nuevas_predicciones = modeloMACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones
+nuevas_predicciones_MACCS = modeloMACCS.predict(predict_data)
+nuevas_y_pred_prob_MACCS = modeloMACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones_MACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS, y_pred)
+recall = recall_score(y_true_modeloMACCS, y_pred)
+f1 = f1_score(y_true_modeloMACCS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -79,23 +80,24 @@ Fisicoquimicas_test = test_data_fingerprints.iloc[:, 1:6]
 columns_subset_test = pd.concat([Fisicoquimicas_test, MACCS_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 predict_data = columns_subset_test
-nuevas_predicciones = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones
+nuevas_predicciones_MACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
+nuevas_y_pred_prob_MACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones_MACCS_FISICOQUIMICOS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS_FISICOQUIMICOS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+recall = recall_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+f1 = f1_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -124,23 +126,24 @@ ECFP_test = test_data_fingerprints.iloc[:, 6:2054]
 #print(ECFP)
 columnas_predictoras_test = ECFP_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones
+nuevas_predicciones_ECFP = modelo_ECFP.predict(predict_data)
+nuevas_y_pred_prob_ECFP = modelo_ECFP.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones_ECFP
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFP']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP, y_pred)
+recall = recall_score(y_true_modelo_ECFP, y_pred)
+f1 = f1_score(y_true_modelo_ECFP, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -167,23 +170,24 @@ print('--------------------------------')
 # Definir las columnas predictoras y la variable objetivo
 columns_subset_test = pd.concat([Fisicoquimicas_test, ECFP_test], axis=1)
 predict_data = columns_subset_test
-nuevas_predicciones = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_ECFP_FISICOQUIMICAS = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_ECFP_FISICOQUIMICAS = modelo_ECFP_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones_ECFP_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -210,23 +214,24 @@ columns_subset_test = pd.concat([MACCS_test, ECFP_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP_MACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones
+nuevas_predicciones_ECFP_MACCS = modelo_ECFP_MACCS.predict(predict_data)
+nuevas_y_pred_prob_ECFP_MACCS = modelo_ECFP_MACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones_ECFP_MACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_MACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_MACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_MACCS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_MACCS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_MACCS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_MACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -257,23 +262,24 @@ columns_subset_test = pd.concat([MACCS_test, ECFP_test, Fisicoquimicas_test], ax
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_ECFP_MACCS_FISICOQUIMICAS = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_ECFP_MACCS_FISICOQUIMICAS = modeloECFP_MACCS_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones_ECFP_MACCS_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloECFP_MACCS_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -290,8 +296,21 @@ X_test_list = [y_pred_prob_testMACCS, y_pred_prob_testMACCS_FISICOQUIMICOS, y_pr
 y_test_list = [y_testMACCS, y_testMACCS_FISICOQUIMICOS, y_testECFP, y_testECFP_FISICOQUIMICOS, y_testMACCS_ECFP, y_testMACCS_ECFP_FISICOQUIMICOS]
 etiquetas_modelos = ['Modelo MACCS', 'Modelo MACCS + FISICOQUIMICAS', 'Modelo ECFP', 'Modelo ECFP + FISICOQUIMICAS', 'Modelo ECFP + MACCS', 'Modelo ECFP, MACCS, FISICOQUIMICAS']
 graficar_roc_multiple(modelos, X_test_list, y_test_list, etiquetas_modelos)
+
+"""
+#CURVAS ROC TEST
 """
 
+"""
+#CURVAS ROC PARA VER MEJORES MODELOS
+"""
+from modules.procesamiento.graficas import graficar_roc_multiple
+modelos = [modeloMACCS, modeloMACCS_FISICOQUIMICOS, modelo_ECFP, modelo_ECFP_FISICOQUIMICAS, modelo_ECFP_MACCS, modeloECFP_MACCS_FISICOQUIMICAS]
+X_test_list = [nuevas_y_pred_prob_MACCS, nuevas_y_pred_prob_MACCS_FISICOQUIMICOS, nuevas_y_pred_prob_ECFP, nuevas_y_pred_prob_ECFP_FISICOQUIMICAS, nuevas_y_pred_prob_ECFP_MACCS, nuevas_y_pred_prob_ECFP_MACCS_FISICOQUIMICAS]
+y_test_list = [y_true_modeloMACCS, y_true_modeloMACCS_FISICOQUIMICOS, y_true_modelo_ECFP, y_true_modelo_ECFP_FISICOQUIMICAS, y_true_modelo_ECFP_MACCS, y_true_modeloECFP_MACCS_FISICOQUIMICAS]
+etiquetas_modelos = ['Modelo MACCS', 'Modelo MACCS + FISICOQUIMICAS', 'Modelo ECFP', 'Modelo ECFP + FISICOQUIMICAS', 'Modelo ECFP + MACCS', 'Modelo ECFP, MACCS, FISICOQUIMICAS']
+graficar_roc_multiple(modelos, X_test_list, y_test_list, etiquetas_modelos)
+"""
 
 
 
@@ -327,23 +346,24 @@ test_data_fingerprints = leer_csv('C:/Users/licit/OneDrive/Documentos/Proyectos 
 test_data_fingerprints = test_data_fingerprints.drop(columns=['MACCS', 'SMILES', 'ECFP'])
 MACCS_test = test_data_fingerprints.iloc[:, 2054:2222]
 predict_data = MACCS_test #extrae los nombres de las columnas del df
-nuevas_predicciones = modeloMACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones
+nuevas_predicciones_modeloMACCS = modeloMACCS.predict(predict_data)
+nuevas_y_pred_prob_modeloMACCS = modeloMACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones_modeloMACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS, y_pred)
+recall = recall_score(y_true_modeloMACCS, y_pred)
+f1 = f1_score(y_true_modeloMACCS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -375,23 +395,24 @@ Fisicoquimicas_test = test_data_fingerprints.iloc[:, 1:6]
 columns_subset_test = pd.concat([Fisicoquimicas_test, MACCS_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 predict_data = columns_subset_test
-nuevas_predicciones = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones
+nuevas_predicciones_modeloMACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
+nuevas_y_pred_prob_modeloMACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones_modeloMACCS_FISICOQUIMICOS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS_FISICOQUIMICOS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+recall = recall_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+f1 = f1_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -420,23 +441,24 @@ ECFP_test = test_data_fingerprints.iloc[:, 6:2054]
 #print(ECFP)
 columnas_predictoras_test = ECFP_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP = modelo_ECFP.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP = modelo_ECFP.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones_modelo_ECFP
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFP']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP, y_pred)
+recall = recall_score(y_true_modelo_ECFP, y_pred)
+f1 = f1_score(y_true_modelo_ECFP, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -463,23 +485,24 @@ print('--------------------------------')
 # Definir las columnas predictoras y la variable objetivo
 columns_subset_test = pd.concat([Fisicoquimicas_test, ECFP_test], axis=1)
 predict_data = columns_subset_test
-nuevas_predicciones = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP_FISICOQUIMICAS = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP_FISICOQUIMICAS = modelo_ECFP_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones_modelo_ECFP_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -506,23 +529,24 @@ columns_subset_test = pd.concat([MACCS_test, ECFP_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP_MACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP_MACCS = modelo_ECFP_MACCS.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP_MACCS = modelo_ECFP_MACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones_modelo_ECFP_MACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_MACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_MACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_MACCS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_MACCS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_MACCS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_MACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -553,23 +577,24 @@ columns_subset_test = pd.concat([MACCS_test, ECFP_test, Fisicoquimicas_test], ax
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_modeloECFP_MACCS_FISICOQUIMICAS = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_modeloECFP_MACCS_FISICOQUIMICAS = modeloECFP_MACCS_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones_modeloECFP_MACCS_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloECFP_MACCS_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -605,16 +630,27 @@ etiquetas_modelos = ["Modelo MACCS_Electronicos_Balanced",	" Modelo MACCS + FISI
                      " Modelo ECFP + FISICOQUIMICAS_Balanced",	" Modelo ECFP + MACCS_Balanced",	" Modelo ECFP + MACCS + FISICOQUIMICAS_Balanced"]
 
 graficar_roc_multiple(modelos, X_test_list, y_test_list, etiquetas_modelos)
+"""
+#CURVAS ROC prueba
+"""
+from modules.procesamiento.graficas import graficar_roc_multiple
+modelos = [modeloMACCS, modeloMACCS_FISICOQUIMICOS, modelo_ECFP, modelo_ECFP_FISICOQUIMICAS, modelo_ECFP_MACCS, modeloECFP_MACCS_FISICOQUIMICAS]
+X_test_list = [nuevas_y_pred_prob_modeloMACCS, nuevas_y_pred_prob_modeloMACCS_FISICOQUIMICOS, nuevas_y_pred_prob_modelo_ECFP, nuevas_y_pred_prob_modelo_ECFP_FISICOQUIMICAS, nuevas_y_pred_prob_modelo_ECFP_MACCS, nuevas_y_pred_prob_modeloECFP_MACCS_FISICOQUIMICAS]
+y_test_list = [y_true_modeloMACCS, y_true_modeloMACCS_FISICOQUIMICOS, y_true_modelo_ECFP, y_true_modelo_ECFP_FISICOQUIMICAS, y_true_modelo_ECFP_MACCS, y_true_modeloECFP_MACCS_FISICOQUIMICAS]
+etiquetas_modelos = ["Modelo MACCS_Electronicos_Balanced",	" Modelo MACCS + FISICOQUIMICAS_Balanced",	" Modelo ECFP_Balanced",
+                     " Modelo ECFP + FISICOQUIMICAS_Balanced",	" Modelo ECFP + MACCS_Balanced",	" Modelo ECFP + MACCS + FISICOQUIMICAS_Balanced"]
+
+graficar_roc_multiple(modelos, X_test_list, y_test_list, etiquetas_modelos)
 
 
 
-
-
+"""
 """
 #PROPIEDADES ELECTRONICAS DATASET DESBALANCEADO
 """
 
-#Propiedades_electrónicas = leer_csv('C:/Users/licit/OneDrive/Documentos/Proyectos python/TESIS/data/Propiedades_electrónicas.csv')
+"""
+Propiedades_electrónicas = leer_csv('C:/Users/licit/OneDrive/Documentos/Proyectos python/TESIS/data/Propiedades_electrónicas.csv')
 Propiedades_electrónicas_test = leer_csv('C:/Users/licit/OneDrive/Documentos/Proyectos python/TESIS/data/Propiedades_electrónicas_test.csv')
 propiedades_electronicas_a_usar = ["PEOE_VSA2",	"SMR_VSA7",	"SMR_VSA9"]
 
@@ -624,14 +660,14 @@ from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
 
 # Aplicar escalado solo a las columnas necesarias
-#Propiedades_electrónicas_scaled = Propiedades_electrónicas.copy()
+Propiedades_electrónicas_scaled = Propiedades_electrónicas.copy()
 Propiedades_electrónicas_test_scaled = Propiedades_electrónicas_test.copy()
 # Aplicar el escalado a todas las columnas
-#Propiedades_electrónicas_scaled[:] = scaler.fit_transform(Propiedades_electrónicas_scaled)
+Propiedades_electrónicas_scaled[:] = scaler.fit_transform(Propiedades_electrónicas_scaled)
 Propiedades_electrónicas_test_scaled[:] = scaler.fit_transform(Propiedades_electrónicas_test_scaled)
 
 
-#train_data_scaled_electronic = pd.concat([train_data_fingerprints, Propiedades_electrónicas_scaled], axis=1)
+train_data_scaled_electronic = pd.concat([train_data_fingerprints, Propiedades_electrónicas_scaled], axis=1)
 train_data_scaled_electronic_test = pd.concat([test_data_fingerprints, Propiedades_electrónicas_test_scaled], axis=1)
 
 """
@@ -663,23 +699,24 @@ test_data_fingerprints = train_data_scaled_electronic_test
 #test_data_fingerprints = test_data_fingerprints.drop(columns=['MACCS', 'SMILES', 'ECFP'])
 MACCS_test = test_data_fingerprints.iloc[:, 2054:2221]
 predict_data = MACCS_test #extrae los nombres de las columnas del df
-nuevas_predicciones = modeloMACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones
+nuevas_predicciones_modeloMACCS = modeloMACCS.predict(predict_data)
+nuevas_y_pred_prob_modeloMACCS = modeloMACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones_modeloMACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS, y_pred)
+recall = recall_score(y_true_modeloMACCS, y_pred)
+f1 = f1_score(y_true_modeloMACCS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -714,23 +751,24 @@ Electronicas_TEST = test_data_fingerprints[propiedades_electronicas_a_usar]
 columns_subset_test = pd.concat([Fisicoquimicas_test,Electronicas_TEST, MACCS_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 predict_data = columns_subset_test
-nuevas_predicciones = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones
+nuevas_predicciones_modeloMACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
+nuevas_y_pred_prob_modeloMACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones_modeloMACCS_FISICOQUIMICOS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS_FISICOQUIMICOS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+recall = recall_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+f1 = f1_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -759,23 +797,24 @@ ECFP_test = test_data_fingerprints.iloc[:, 6:2054]
 #print(ECFP)
 columnas_predictoras_test = ECFP_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP = modelo_ECFP.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP= modelo_ECFP.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones_modelo_ECFP
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFP']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP, y_pred)
+recall = recall_score(y_true_modelo_ECFP, y_pred)
+f1 = f1_score(y_true_modelo_ECFP, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -802,23 +841,24 @@ print('--------------------------------')
 # Definir las columnas predictoras y la variable objetivo
 columns_subset_test = pd.concat([Fisicoquimicas_test, Electronicas_TEST, ECFP_test], axis=1)
 predict_data = columns_subset_test
-nuevas_predicciones = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP_FISICOQUIMICAS = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP_FISICOQUIMICASP= modelo_ECFP_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones_modelo_ECFP_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -845,23 +885,24 @@ columns_subset_test = pd.concat([MACCS_test, ECFP_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP_MACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP_MACCS = modelo_ECFP_MACCS.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP_MACCS= modelo_ECFP_MACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones_modelo_ECFP_MACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_MACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_MACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_MACCS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_MACCS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_MACCS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_MACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -892,23 +933,24 @@ columns_subset_test = pd.concat([MACCS_test, ECFP_test, Fisicoquimicas_test, Ele
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_modeloECFP_MACCS_FISICOQUIMICAS = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_modeloECFP_MACCS_FISICOQUIMICAS= modeloECFP_MACCS_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones_modeloECFP_MACCS_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloECFP_MACCS_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -921,8 +963,8 @@ print(f"Exactitud: {accuracy}")
 """
 from modules.procesamiento.graficas import graficar_roc_multiple
 modelos = [modeloMACCS, modeloMACCS_FISICOQUIMICOS, modelo_ECFP, modelo_ECFP_FISICOQUIMICAS, modelo_ECFP_MACCS, modeloECFP_MACCS_FISICOQUIMICAS]
-X_test_list = [y_pred_prob_testMACCS, y_pred_prob_testMACCS_FISICOQUIMICOS, y_pred_prob_testECFP, y_pred_prob_testECFP_FISICOQUIMICOS, y_pred_prob_testMACCS_ECFP, y_pred_prob_testMACCS_ECFP_FISICOQUIMICOS]
-y_test_list = [y_testMACCS, y_testMACCS_FISICOQUIMICOS, y_testECFP, y_testECFP_FISICOQUIMICOS, y_testMACCS_ECFP, y_testMACCS_ECFP_FISICOQUIMICOS]
+X_test_list = [nuevas_y_pred_prob_modeloMACCS, nuevas_y_pred_prob_modeloMACCS_FISICOQUIMICOS, nuevas_y_pred_prob_modelo_ECFP, nuevas_y_pred_prob_modelo_ECFP_FISICOQUIMICASP, nuevas_y_pred_prob_modelo_ECFP_MACCS, nuevas_y_pred_prob_modeloECFP_MACCS_FISICOQUIMICAS]
+y_test_list = [y_true_modeloMACCS, y_true_modeloMACCS_FISICOQUIMICOS, y_true_modelo_ECFP, y_true_modelo_ECFP_FISICOQUIMICAS, y_true_modelo_ECFP_MACCS, y_true_modeloECFP_MACCS_FISICOQUIMICAS]
 etiquetas_modelos = ["Modelo MACCS_Electronicos_Electronicas",	" Modelo MACCS + FISICOQUIMICAS_Electronicas",	" Modelo ECFP_Electronicas",
                      " Modelo ECFP + FISICOQUIMICAS_Electronicas",	" Modelo ECFP + MACCS_Electronicas",
                      " Modelo ECFP_MACCS_Electronicas"]
@@ -943,7 +985,7 @@ columnas_predictoras = columns_subset
 #columnas_predictoras = columnas_predictoras.astype(int)
 target = train_data_fingerprints["Clasificacion_ATS"]
 # Llamar al modelo
-modeloECFP_MACCS_FISICOQUIMICAS, accuracy_train, accuracy_test, cm_test, report_testa = arbol_decision(columnas_predictoras, target)
+modeloECFP_MACCS_FISICOQUIMICAS, accuracy_train, accuracy_test, cm_test, report_testa, y_pred_prob_testMACCS_elect_FISICOQUIMICOS, y_testMACCS_elect_FISICOQUIMICOS = arbol_decision(columnas_predictoras, target)
 
 print('Extraer la importancia de las características modelo_todaslasvariables')
 print('______________________________  ')
@@ -960,9 +1002,8 @@ df_importancias = df_importancias.sort_values(by="Importancia", ascending=False)
 
 # Mostrar las variables más importantes
 print(df_importancias)
+
 """
-
-
 
 
 
@@ -1001,23 +1042,24 @@ test_data_fingerprints = train_data_scaled_electronic_test
 #test_data_fingerprints = test_data_fingerprints.drop(columns=['MACCS', 'SMILES', 'ECFP'])
 MACCS_test = test_data_fingerprints.iloc[:, 2054:2221]
 predict_data = MACCS_test #extrae los nombres de las columnas del df
-nuevas_predicciones = modeloMACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones
+nuevas_predicciones_modeloMACCS = modeloMACCS.predict(predict_data)
+nuevas_y_pred_prob_modeloMACCS= modeloMACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCS'] = nuevas_predicciones_modeloMACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS, y_pred)
+recall = recall_score(y_true_modeloMACCS, y_pred)
+f1 = f1_score(y_true_modeloMACCS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -1051,23 +1093,24 @@ Fisicoquimicas_test = test_data_fingerprints.iloc[:, 1:6]
 columns_subset_test = pd.concat([Fisicoquimicas_test,Electronicas_TEST, MACCS_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 predict_data = columns_subset_test
-nuevas_predicciones = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones
+nuevas_predicciones_modeloMACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict(predict_data)
+nuevas_y_pred_prob_modeloMACCS_FISICOQUIMICOS = modeloMACCS_FISICOQUIMICOS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS'] = nuevas_predicciones_modeloMACCS_FISICOQUIMICOS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloMACCS_FISICOQUIMICOS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_MACCSFISICOQUIMICOS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+recall = recall_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+f1 = f1_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
+accuracy = accuracy_score(y_true_modeloMACCS_FISICOQUIMICOS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -1096,23 +1139,24 @@ ECFP_test = test_data_fingerprints.iloc[:, 6:2054]
 #print(ECFP)
 columnas_predictoras_test = ECFP_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP = modelo_ECFP.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP = modelo_ECFP.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFP'] = nuevas_predicciones_modelo_ECFP
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFP']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP, y_pred)
+recall = recall_score(y_true_modelo_ECFP, y_pred)
+f1 = f1_score(y_true_modelo_ECFP, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -1139,23 +1183,24 @@ print('--------------------------------')
 # Definir las columnas predictoras y la variable objetivo
 columns_subset_test = pd.concat([Fisicoquimicas_test, Electronicas_TEST, ECFP_test], axis=1)
 predict_data = columns_subset_test
-nuevas_predicciones = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP_FISICOQUIMICAS = modelo_ECFP_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP_FISICOQUIMICAS = modelo_ECFP_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS'] = nuevas_predicciones_modelo_ECFP_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -1182,23 +1227,24 @@ columns_subset_test = pd.concat([MACCS_test, ECFP_test], axis=1)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modelo_ECFP_MACCS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones
+nuevas_predicciones_modelo_ECFP_MACCS = modelo_ECFP_MACCS.predict(predict_data)
+nuevas_y_pred_prob_modelo_ECFP_MACCS = modelo_ECFP_MACCS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCS'] = nuevas_predicciones_modelo_ECFP_MACCS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modelo_ECFP_MACCS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modelo_ECFP_MACCS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modelo_ECFP_MACCS, y_pred)
+recall = recall_score(y_true_modelo_ECFP_MACCS, y_pred)
+f1 = f1_score(y_true_modelo_ECFP_MACCS, y_pred)
+accuracy = accuracy_score(y_true_modelo_ECFP_MACCS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -1229,23 +1275,24 @@ print(columns_subset_test)
 columns_subset_test.columns = columns_subset_test.columns.astype(str)
 columnas_predictoras_test = columns_subset_test
 predict_data = columnas_predictoras_test
-nuevas_predicciones = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
-test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones
+nuevas_predicciones_modeloECFP_MACCS_FISICOQUIMICAS = modeloECFP_MACCS_FISICOQUIMICAS.predict(predict_data)
+nuevas_y_pred_prob_modeloECFP_MACCS_FISICOQUIMICAS = modeloECFP_MACCS_FISICOQUIMICAS.predict_proba(predict_data)[:, 1]
+test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS'] = nuevas_predicciones_modeloECFP_MACCS_FISICOQUIMICAS
 
 #guardar_csv(test_data, 'data/predicion_arbol.csv')
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score, ConfusionMatrixDisplay
 # Ya tienes las predicciones en la columna 'nuevas_predicciones' y las etiquetas reales en 'Clasificacion_ATS'
-y_true = test_data_fingerprints['Clasificacion_ATS']
+y_true_modeloECFP_MACCS_FISICOQUIMICAS = test_data_fingerprints['Clasificacion_ATS']
 y_pred = test_data_fingerprints['nuevas_predicciones_ECFPFMACCSFISICOQUIMICAS']
 # Matriz de confusión
-cm = confusion_matrix(y_true, y_pred)
+cm = confusion_matrix(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 print("Matriz de Confusión:")
 print(cm)
 #Cálculo de métricas
-precision = precision_score(y_true, y_pred)
-recall = recall_score(y_true, y_pred)
-f1 = f1_score(y_true, y_pred)
-accuracy = accuracy_score(y_true, y_pred)
+precision = precision_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+recall = recall_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+f1 = f1_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
+accuracy = accuracy_score(y_true_modeloECFP_MACCS_FISICOQUIMICAS, y_pred)
 
 # Mostrar las métricas
 print(f"Precisión: {precision}")
@@ -1258,8 +1305,8 @@ print(f"Exactitud: {accuracy}")
 """
 from modules.procesamiento.graficas import graficar_roc_multiple
 modelos = [modeloMACCS, modeloMACCS_FISICOQUIMICOS, modelo_ECFP, modelo_ECFP_FISICOQUIMICAS, modelo_ECFP_MACCS, modeloECFP_MACCS_FISICOQUIMICAS]
-X_test_list = [y_pred_prob_testMACCS, y_pred_prob_testMACCS_FISICOQUIMICOS, y_pred_prob_testECFP, y_pred_prob_testECFP_FISICOQUIMICOS, y_pred_prob_testMACCS_ECFP, y_pred_prob_testMACCS_ECFP_FISICOQUIMICOS]
-y_test_list = [y_testMACCS, y_testMACCS_FISICOQUIMICOS, y_testECFP, y_testECFP_FISICOQUIMICOS, y_testMACCS_ECFP, y_testMACCS_ECFP_FISICOQUIMICOS]
+X_test_list = [nuevas_y_pred_prob_modeloMACCS, nuevas_predicciones_modeloMACCS_FISICOQUIMICOS, nuevas_y_pred_prob_modelo_ECFP, nuevas_y_pred_prob_modelo_ECFP_FISICOQUIMICAS, nuevas_y_pred_prob_modelo_ECFP_MACCS, nuevas_y_pred_prob_modeloECFP_MACCS_FISICOQUIMICAS]
+y_test_list = [y_true_modeloMACCS, y_true_modeloMACCS_FISICOQUIMICOS, y_true_modelo_ECFP, y_true_modelo_ECFP_FISICOQUIMICAS, y_true_modelo_ECFP_MACCS, y_true_modeloECFP_MACCS_FISICOQUIMICAS]
 etiquetas_modelos = ["Modelo MACCS_Electronicos_Electronicas_Balanced",	" Modelo MACCS + FISICOQUIMICAS_Electronicas_Balanced",
                      " Modelo ECFP_Electronicas_Balanced",	" Modelo ECFP + FISICOQUIMICAS_Electronicas_Balanced",
                      " Modelo ECFP + MACCS_Electronicas_Balanced",	" Modelo ECFP + MACCS + FISICOQUIMICAS_Electronicas_Balanced",]

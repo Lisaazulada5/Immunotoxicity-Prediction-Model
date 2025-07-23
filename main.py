@@ -1361,6 +1361,100 @@ if not os.path.exists(output_path):
 else:
     print(f"El archivo {output_path} ya existe. No se ha procesado de nuevo.")
 
+
+"""
+Grafica de todas las variables para incluirlas en el documento
+"""
+print(df.columns)
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Lista exacta de las variables que quieres analizar
+variables = [
+    'LogP',
+    'Peso_Molecular',
+    'NumHAcceptors',
+    'NumHDonors',
+    'Dobles_Enlaces',
+    'Triples_Enlaces',
+    'Numero_carboxilos',
+    'TPSA',
+    'NumRotatableBonds'
+]
+
+n_vars = len(variables)
+n_cols = 3
+n_rows = (n_vars + n_cols - 1) // n_cols
+
+# Crear subplots
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(6 * n_cols, 4 * n_rows))
+axs = axs.flatten()
+
+# Graficar cada histograma
+for i, var in enumerate(variables):
+    sns.histplot(data=df, x=var, kde=True, ax=axs[i], color='skyblue')
+    axs[i].set_title(f'Histograma de {var}')
+    axs[i].set_xlabel(var)
+    axs[i].set_ylabel('Frecuencia')
+
+# Eliminar subplots vacíos
+for j in range(i + 1, len(axs)):
+    fig.delaxes(axs[j])
+
+plt.tight_layout()
+output_path = 'data/graficas/histograma_univariado_variables_quimicas.png'
+plt.savefig(output_path, dpi=300)
+print(f"Gráfico guardado en: {output_path}")
+
+"""
+BOX PLOT DE LAS VARIABLES para incluirlas en el documento
+"""
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Lista exacta de las variables que quieres analizar
+variables = [
+    'LogP',
+    'Peso_Molecular',
+    'NumHAcceptors',
+    'NumHDonors',
+    'Dobles_Enlaces',
+    'Triples_Enlaces',
+    'Numero_carboxilos',
+    'TPSA',
+    'NumRotatableBonds'
+]
+
+n_vars = len(variables)
+n_cols = 3
+n_rows = (n_vars + n_cols - 1) // n_cols
+
+# Crear subplots
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(6 * n_cols, 4 * n_rows))
+axs = axs.flatten()
+
+# Graficar cada boxplot
+for i, var in enumerate(variables):
+    sns.boxplot(data=df, y=var, ax=axs[i], color='skyblue')
+    axs[i].set_title(f'Boxplot de {var}')
+    axs[i].set_xlabel('')
+    axs[i].set_ylabel(var)
+
+# Eliminar subplots vacíos
+for j in range(i + 1, len(axs)):
+    fig.delaxes(axs[j])
+
+plt.tight_layout()
+output_path = 'data/graficas/boxplot_univariado_variables_quimicas.png'
+plt.savefig(output_path, dpi=300)
+print(f"Gráfico guardado en: {output_path}")
+
+
+
+
+
+
 """
 ANALIZAMOS LA NORMALIDAD DE LOS DATOS
 """
@@ -1691,6 +1785,95 @@ resultado_mann_whitney = prueba_mann_whitney_df(df_scaled, columna_categorica, c
 print(resultado_mann_whitney)
 
 """
+Grafico de cajas y bigotes para incluirlo en el documento
+"""
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+
+# Asegurarse de que la carpeta existe
+os.makedirs("data/graficas", exist_ok=True)
+
+# Variables de interés
+columnas = [
+    'LogP_scaled',
+    'TPSA_scaled',
+    'NumRotatableBonds_scaled',
+    'Peso_Molecular_scaled',
+    'Dobles_Enlaces_scaled',
+    'NumHAcceptors_scaled',
+    'NumHDonors_scaled'
+]
+
+# Crear figura y subplots
+fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(18, 8))
+axes = axes.flatten()
+
+# Generar boxplots
+for i, col in enumerate(columnas):
+    sns.boxplot(x='Clasificacion_ATS', y=col, data=df_scaled, ax=axes[i], palette="pastel")
+    axes[i].set_title(col)
+    axes[i].set_xlabel('')
+    axes[i].set_ylabel('Valor Escalado')
+
+# Eliminar subplot sobrante si lo hay
+if len(columnas) < len(axes):
+    for j in range(len(columnas), len(axes)):
+        fig.delaxes(axes[j])
+
+# Ajustar diseño y guardar imagen
+plt.tight_layout()
+plt.savefig("data/graficas/cajasybigotestotal.png", dpi=300)
+plt.show()
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+
+# Asegurarse de que la carpeta existe
+os.makedirs("data/graficas", exist_ok=True)
+
+# Variables de interés
+columnas = [
+    'LogP_scaled',
+    'TPSA_scaled',
+    'NumRotatableBonds_scaled',
+    'Peso_Molecular_scaled',
+    'Dobles_Enlaces_scaled',
+    'NumHAcceptors_scaled',
+    'NumHDonors_scaled'
+]
+
+# Crear figura y subplots
+fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(18, 8))
+axes = axes.flatten()
+
+# Generar gráficos de violín
+for i, col in enumerate(columnas):
+    sns.violinplot(x='Clasificacion_ATS', y=col, data=df_scaled, ax=axes[i], palette="muted", inner="box")
+    axes[i].set_title(col)
+    axes[i].set_xlabel('')
+    axes[i].set_ylabel('Valor Escalado')
+
+# Eliminar subplot sobrante si lo hay
+if len(columnas) < len(axes):
+    for j in range(len(columnas), len(axes)):
+        fig.delaxes(axes[j])
+
+# Ajustar diseño y guardar imagen
+plt.tight_layout()
+plt.savefig("data/graficas/violines_total.png", dpi=300)
+plt.show()
+
+
+
+
+
+
+
+
+"""
 DIVIDIR DATOS PARA FEATURE SELECION
 """
 print('______________________________ ')
@@ -1791,7 +1974,7 @@ else:
 FEATURE SELECTION
 """
 
-"""
+
 """
 #Realizamos una regresión lógistica con todas las variables
 """
@@ -1853,6 +2036,43 @@ if not os.path.exists(output_path):
     print(f"Archivo generado: {output_path}")
 else:
     print(f"El archivo {output_path} ya existe. No se ha procesado de nuevo.")
+
+import numpy as np
+def Puntos_influentes_Cook(modelo, train_data_scaled):
+    influencia = modelo.get_influence()
+    cooks_d = influencia.cooks_distance[0]
+    umbral_cook = 4 / len(train_data_scaled)
+    puntos_influyentes = np.where(cooks_d > umbral_cook)[0]
+    print("Puntos influyentes según Cook:", puntos_influyentes)
+    return puntos_influyentes
+
+# Supongamos que ya hiciste esto antes:
+influyentes = Puntos_influentes_Cook(modelo, train_data_scaled)
+
+# Extraer filas correspondientes
+influyentes_df = train_data_scaled.iloc[influyentes]
+
+# Filtrar columnas si tienes la lista INPUT
+influyentes_df_filtrado = influyentes_df[["INPUT"] + ['Clasificacion_ATS']]
+print(influyentes_df_filtrado)
+
+# Obtener los índices de los puntos influyentes
+indices_influyentes = Puntos_influentes_Cook(modelo, train_data_scaled)
+
+# Si train_data_scaled es un DataFrame:
+train_data_sin_influyentes = train_data_scaled.drop(index=indices_influyentes).reset_index(drop=True)
+
+# Si es un array de numpy:
+# train_data_sin_influyentes = np.delete(train_data_scaled, indices_influyentes, axis=0)
+
+print('SUMMARY MODELO REGLOG')
+print('______________________________ ')
+from modules.procesamiento.modelos import regresion_logistica_sm
+modelo, summary, accuracy, cm, report, y_test, y_pred_proba = regresion_logistica_sm(train_data_sin_influyentes, X_columns, target)
+
+
+
+
 
 """
 #Coeficientes del modelo y Calculo ODDS coeficientes
@@ -1923,6 +2143,7 @@ plt.title('Residuos crudos vs. Valores ajustados')
 plt.legend()
 plt.show()
 
+"""
 print('______________________________ ')
 print('REGRESION LOGISTICA SIN LA VARIABLE NumHAcceptors_scaled ')
 print('______________________________ ')
